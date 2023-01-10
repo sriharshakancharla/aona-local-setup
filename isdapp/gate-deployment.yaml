@@ -41,7 +41,7 @@ spec:
         - env:
             - name: spring_profiles_active
               value: vault,local
-          image: quay.io/opsmxpublic/ubi8-gate:v4.1.2-rc4
+          image: quay.io/opsmxpublic/ubi8-gate:v4.1.2-rc5
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
