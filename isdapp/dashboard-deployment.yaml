@@ -38,7 +38,7 @@ spec:
         release: isd411
     spec:
       containers:
-        - image: quay.io/opsmxpublic/ubi8-oes-dashboard:v4.1.2-rc4
+        - image: quay.io/opsmxpublic/ubi8-oes-dashboard:v4.1.2-rc5
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
