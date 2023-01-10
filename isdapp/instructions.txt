@@ -1,0 +1,56 @@
+to create yaml for rollouts and analysis templates for blue green strategy with pre-promotion analysis
+
+pre-requisites
+yq needs to be installed https://github.com/mikefarah/yq  ( check yq --version)
+github repo where the yaml  files for the application are present, deployment and correpsonding service.yamls
+isd+argocd+argorollouts+prometheus installed and setup
+
+
+steps
+1. cd to github repo where the deployment and service yamls for the application are
+2. download templates and script
+2.1 
+curl https://raw.githubusercontent.com/gopaljayanthi/testArgoProj/main/bg-411-sns-templates/rollout.tmpl -o rollout.tmpl
+2.2 
+curl https://raw.githubusercontent.com/gopaljayanthi/testArgoProj/main/bg-411-sns-templates/analysistemplate.tmpl -o analysistemplate.tmpl
+2.3 
+curl https://raw.githubusercontent.com/gopaljayanthi/testArgoProj/main/bg-411-sns-templates/configmap.tmpl -o configmap.tmpl
+2.4 
+check in iSD URL if there is a metric provide of Account type with Account name mentioned in metrixtemplate.tmpl https://<ISD-URL>/ui/setup/datasourcelist
+
+      "data": {
+        "percent_diff_threshold": "hard",
+        "isNormalize": false,
+        "groups": [
+          {
+            "metrics": [
+              {
+                "metricType": "ADVANCED",
+                "metricWeight": 1,
+                "nanStrategy": "ReplaceWithZero",
+                "accountName": "isd312-saas-prom", <====== accountNme
+
+      "advancedProvider": "PROMETHEUS" <================ provider
+
+
+
+
+
+
+
+curl https://raw.githubusercontent.com/gopaljayanthi/testArgoProj/main/bg-411-sns-templates/metrixtemplate.tmpl -o metrixtemplate.tmpl
+2.5 
+curl https://raw.githubusercontent.com/gopaljayanthi/testArgoProj/main/bg-411-sns-templates/opsmx-profile-secret.tmpl -o opsmx-profile-secret.tmpl
+2.6
+curl https://raw.githubusercontent.com/gopaljayanthi/testArgoProj/main/bg-411-sns-templates/sa-role-rb.tmpl sa-role-rb.tmpl
+2.7
+curl https://raw.githubusercontent.com/gopaljayanthi/testArgoProj/main/bg-411-sns-templates/setup.sh setup.sh
+
+3. create yamls from templates
+3.1 ./setup.sh APP-NAME APP-NAMESPACE ISD-URL
+4. git add/commit/push the files to github repo and sync the repo from argocdurl
+5. change the image in one of the deployments add/commit/push the files to github repo and sync the repo from argocdurl
+5.go to argocd and doa sync and check whether an analysis is triggered.
+
+
+

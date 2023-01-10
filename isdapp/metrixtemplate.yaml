@@ -1,0 +1,100 @@
+apiVersion: v1
+data:
+  prometheus-health-validator: |
+   {
+      "filterKey": "${namespace_key},${pod_key},${app_name}",
+      "accountName": "Prometheus",
+      "data": {
+        "percent_diff_threshold": "hard",
+        "isNormalize": false,
+        "groups": [
+          {
+            "metrics": [
+              {
+                "metricType": "ADVANCED",
+                "metricWeight": 1,
+                "nanStrategy": "ReplaceWithZero",
+                "riskDirection": "Higher",
+                "customThresholdHigher": 70,
+                "name": "sum(rate(container_cpu_usage_seconds_total{namespace=\"${namespace_key}\", pod=~\".*${pod_key}.*\"}[5m]) * 100)",
+                "criticality": "Normal",
+                "customThresholdLower": "10",
+                "watchlist": false
+              }
+            ],
+            "group": "CPU Usage By Pod Name"
+          },
+          {
+            "metrics": [
+              {
+                "metricType": "ADVANCED",
+                "metricWeight": 1,
+                "nanStrategy": "ReplaceWithZero",
+                "riskDirection": "Higher",
+                "customThresholdHigher": 70,
+                "name": "sum(container_memory_working_set_bytes{namespace=\"${namespace_key}\", pod=~\".*${pod_key}.*\"})",
+                "criticality": "Normal",
+                "customThresholdLower": "10",
+                "watchlist": false
+              }
+            ],
+            "group": "Memory Usage By Pod Name"
+          },
+          {
+            "metrics": [
+              {
+                "metricType": "ADVANCED",
+                "metricWeight": 1,
+                "nanStrategy": "ReplaceWithZero",
+                "riskDirection": "Higher",
+                "customThresholdHigher": 90,
+                "name": "sum(rate(http_server_requests_seconds_sum{app=\"${app_name}\",pod=~\"${pod_key}\"}[5m])) / sum(rate(http_server_requests_seconds_count{app=\"${app_name}\",pod=~\"${pod_key}\"}[5m]))",
+                "criticality": "Normal",
+                "customThresholdLower": "10",
+                "watchlist": false
+              }
+            ],
+            "group": "Application Latency"
+          },
+          {
+            "metrics": [
+              {
+                "metricType": "ADVANCED",
+                "metricWeight": 1,
+                "nanStrategy": "ReplaceWithZero",
+                "riskDirection": "HigherOrLower",
+                "customThresholdHigher": 50,
+                "name": "sum(rate(http_server_requests_seconds_count{app=\"${app_name}\",pod=~\"${pod_key}\"}[5m]))",
+                "criticality": "Normal",
+                "customThresholdLower": 90,
+                "watchlist": false
+              }
+            ],
+            "group": "Application Request Rate"
+          },
+          {
+            "metrics": [
+              {
+                "metricType": "ADVANCED",
+                "metricWeight": 1,
+                "nanStrategy": "ReplaceWithZero",
+                "riskDirection": "Higher",
+                "customThresholdHigher": 70,
+                "name": "sum(rate(http_server_requests_seconds_count{app=\"${app_name}\",pod=~\"${pod_key}\",status=~\"^[4-5].*\"}[1m])) or vector(0)",
+                "criticality": "Normal",
+                "customThresholdLower": "10",
+                "watchlist": false
+              }
+            ],
+            "group": "Application Error Rate"
+          }
+        ]
+      },
+      "templateName": "prometheus-health-validator",
+      "isEdit": false,
+      "advancedProvider": "PROMETHEUS",
+      "versionNo": "v1.0"
+    }
+kind: ConfigMap
+metadata:
+  name: metrixtemplates

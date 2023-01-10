@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1               # Create a rollout resource
+kind: Rollout
+metadata:
+  name: DEPLOY-NAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+#put values here
+  workloadRef:                                 # Reference an existing Deployment using workloadRef field
+    apiVersion: apps/v1
+    kind: Deployment
+    name: DEPLOY-NAME
+  strategy:
+    blueGreen:
+      autoPromotionEnabled: false
+      activeService: SERVICE-NAME-stable
+      previewService: SERVICE-NAME-preview
+      prePromotionAnalysis:
+        templates:
+        - templateName: DEPLOY-NAME
+        - templateName: load-executor-jmeter-job
+        args:
+        - name: baseline-hash
+          valueFrom:
+            podTemplateHashValue: Stable
+        - name: preview-hash
+          valueFrom:
+            podTemplateHashValue: Latest
+        - name: servicename
+          valueFrom: 
+            fieldRef:
+              fieldPath: metadata.name
+        
+         

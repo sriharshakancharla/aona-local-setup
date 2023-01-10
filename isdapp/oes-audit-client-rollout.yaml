@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1 # Create a rollout resource
+kind: Rollout
+metadata:
+  name: oes-audit-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oes
+      #put values here
+
+      component: auditclient
+  workloadRef: # Reference an existing Deployment using workloadRef field
+    apiVersion: apps/v1
+    kind: Deployment
+    name: oes-audit-client
+  strategy:
+    blueGreen:
+      autoPromotionEnabled: false
+      activeService: oes-audit-client-stable
+      previewService: oes-audit-client-preview
+      prePromotionAnalysis:
+        templates:
+          - templateName: oes-audit-client
+          - templateName: load-executor-jmeter-job
+        args:
+          - name: baseline-hash
+            valueFrom:
+              podTemplateHashValue: Stable
+          - name: preview-hash
+            valueFrom:
+              podTemplateHashValue: Latest
+          - name: servicename
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name

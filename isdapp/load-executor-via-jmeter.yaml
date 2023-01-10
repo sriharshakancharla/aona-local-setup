@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: load-executor-jmeter-job
+spec:
+  metrics:
+    - name: load-executor
+      initialDelay: 60s
+      provider:
+        job:
+          spec:
+            template:
+              spec:
+                containers:
+                - name: isdjob
+                  command: ["/opt/apache-jmeter-5.5/bin/jmeter.sh", "-n", "-t", "/etc/config/scripts/ArgoAPI.jmx", "-l", "/tmp/report.out", "-j", "/tmp/tmp.out"]
+                  image: docker.io/justb4/jmeter:latest
+                  imagePullPolicy: Always
+                  volumeMounts:
+                  - name: jmx-script-volume
+                    mountPath: /etc/config/scripts
+                restartPolicy: Never
+                volumes:
+                - name: jmx-script-volume
+                  configMap:
+                    name: jmx-config
