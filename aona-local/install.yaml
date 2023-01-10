@@ -32779,7 +32779,7 @@ spec:
         chart: "isdargo-4.1.1"
     spec:
       containers:
-      - image: quay.io/opsmxpublic/ubi8-oes-audit-client:v4.1.2-rc4
+      - image: quay.io/opsmxpublic/ubi8-oes-audit-client:v4.1.2-rc5
         imagePullPolicy: IfNotPresent
         name: oes-audit-client
         ports:
@@ -32865,7 +32865,7 @@ spec:
         chart: "isdargo-4.1.1"
     spec:
       containers:
-      - image: quay.io/opsmxpublic/ubi8-oes-audit-service:v4.1.2-rc4
+      - image: quay.io/opsmxpublic/ubi8-oes-audit-service:v4.1.2-rc5
         imagePullPolicy: IfNotPresent
         name: oes-audit
         ports:
@@ -32982,7 +32982,7 @@ spec:
         image: quay.io/opsmxpublic/postgres:9.6.5
         command: ['/bin/bash', '-c', "sleep 30;echo Waiting for oes-db to be up and running; pg_isready -h oes-db -p 5432 && echo PostgreSQL DB is ready to receive connections"]
       containers:
-        - image: quay.io/opsmxpublic/ubi8-oes-autopilot:v4.1.2-rc4
+        - image: quay.io/opsmxpublic/ubi8-oes-autopilot:v4.1.2-rc5
           imagePullPolicy: IfNotPresent
           name: oes-autopilot
           resources:
@@ -33059,7 +33059,7 @@ spec:
         chart: "isdargo-4.1.1"
     spec:
       containers:
-      - image: quay.io/opsmxpublic/ubi8-oes-dashboard:v4.1.2-rc4
+      - image: quay.io/opsmxpublic/ubi8-oes-dashboard:v4.1.2-rc5
         name: oes-dashboard
         ports:
         - containerPort: 8094
@@ -33139,7 +33139,7 @@ spec:
         chart: "isdargo-4.1.1"
     spec:
       containers:
-      - image: quay.io/opsmxpublic/ubi8-oes-datascience:v4.1.2-rc4
+      - image: quay.io/opsmxpublic/ubi8-oes-datascience:v4.1.2-rc5
         imagePullPolicy: IfNotPresent
         name: oes-datascience
         ports:
@@ -33199,7 +33199,7 @@ spec:
         chart: "isdargo-4.1.1"
     spec:
       containers:
-      - image: quay.io/opsmxpublic/ubi8-gate:v4.1.2-rc4
+      - image: quay.io/opsmxpublic/ubi8-gate:v4.1.2-rc5
         name: oes-gate
         env:
         - name: spring_profiles_active
@@ -33276,7 +33276,7 @@ spec:
         image: quay.io/opsmxpublic/postgres:9.6.5
         command: ['/bin/bash', '-c', "sleep 30;echo Waiting for oes-db to be up and running; pg_isready -h oes-db -p 5432 && echo PostgreSQL DB is ready to receive connections"]
       containers:
-      - image: quay.io/opsmxpublic/ubi8-oes-platform:v4.1.2-rc4
+      - image: quay.io/opsmxpublic/ubi8-oes-platform:v4.1.2-rc5
         name: oes-platform
         ports:
         - containerPort: 8095
@@ -33360,7 +33360,7 @@ spec:
         image: quay.io/opsmxpublic/postgres:9.6.5
         command: ['/bin/bash', '-c', "sleep 30;echo Waiting for oes-db to be up and running; pg_isready -h oes-db -p 5432 && echo PostgreSQL DB is ready to receive connections"]
       containers:
-      - image: quay.io/opsmxpublic/ubi8-oes-sapor:v4.1.2-rc4
+      - image: quay.io/opsmxpublic/ubi8-oes-sapor:v4.1.2-rc5
         name: oes-sapor
         env:
         ports:
@@ -33453,7 +33453,7 @@ spec:
         chart: "isdargo-4.1.1"
     spec:
       containers:
-      - image: quay.io/opsmxpublic/ubi8-oes-ui:v4.1.2-rc4
+      - image: quay.io/opsmxpublic/ubi8-oes-ui:v4.1.2-rc5
         name: oes-ui
         ports:
         - containerPort: 8080
@@ -33526,7 +33526,7 @@ spec:
         image: quay.io/opsmxpublic/postgres:9.6.5
         command: ['/bin/bash', '-c', "sleep 30;echo Waiting for oes-db to be up and running; pg_isready -h oes-db -p 5432 && echo PostgreSQL DB is ready to receive connections"]
       containers:
-      - image: quay.io/opsmxpublic/ubi8-oes-visibility:v4.1.2-rc4
+      - image: quay.io/opsmxpublic/ubi8-oes-visibility:v4.1.2-rc5
         name: oes-visibility
         ports:
         - containerPort: 8096
