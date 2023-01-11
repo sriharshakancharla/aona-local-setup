@@ -1011,6 +1011,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: argocd
 data:
+  exec.enabled: "true"
   accounts.admin: apiKey
   admin.enabled: "true"
   application.instanceLabelKey: argocd.argoproj.io/instance
@@ -1377,8 +1378,9 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: argocd
 data:
-  policy.csv: ""
-  policy.default: ""
+  policy.csv: |
+    p, role:none, exec, create, */*, allow
+  policy.default: role:none
   scopes: '[groups]'
 ---
 # Source: isdargo/charts/argo-cd/templates/argocd-configs/argocd-ssh-known-hosts-cm.yaml
@@ -30403,6 +30405,12 @@ rules:
   verbs:
   - create
   - list
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
 ---
 # Source: isdargo/charts/argo-cd/templates/dex/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
