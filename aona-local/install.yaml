@@ -31215,6 +31215,7 @@ spec:
     port: 443
     targetPort: 8080
   - name: "http"
+    nodePort: 8080
     port: 8080
     targetPort: 8080
   selector:
