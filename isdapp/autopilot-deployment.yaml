@@ -70,6 +70,15 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
+            - mountPath: /opsmx/conf/controller/ca.crt
+              name: ca-certs-volume
+              subPath: tls.crt
+            - mountPath: /opsmx/conf/controller/tls.crt
+              name: certs-volume
+              subPath: tls.crt
+            - mountPath: /opsmx/conf/controller/tls.key
+              name: certs-volume
+              subPath: tls.key
             - mountPath: /opsmx/conf/autopilot.properties
               name: autopilot-config-volume
               subPath: autopilot.properties
@@ -98,6 +107,14 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
+        - name: certs-volume
+          secret:
+            defaultMode: 420
+            secretName: oes-control-secret
+        - name: ca-certs-volume
+          secret:
+            defaultMode: 420
+            secretName: ca-secret
         - name: autopilot-config-volume
           secret:
             defaultMode: 420
